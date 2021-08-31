@@ -6,6 +6,7 @@ using DG.Tweening;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
+    #region Params
     [Header("movement params")]
     public float speed = 10f;
     public float runSpeed = 20f;
@@ -27,9 +28,17 @@ public class PlayerMovement : MonoBehaviour
     public float LandingScaleX = .3f;
     public float LandingScaleDuration = .2f;
 
+
+    [HideInInspector]
+    public bool canMove = true;
+
     private Rigidbody2D _myRigidbody;
     private float _currentSpeed;
     private bool _isJumping = false;
+
+    #endregion
+
+    #region core
 
     private void Awake()
     {
@@ -41,18 +50,18 @@ public class PlayerMovement : MonoBehaviour
         _myRigidbody = GetComponent<Rigidbody2D>();
         _currentSpeed = speed;
         _isJumping = false;
+        canMove = true;
     }
 
     private void Update()
     {
+        if (!canMove) return;
         HandleJump();
         HandleMovement();
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            LandingAnimation();
-        }
     }
+    #endregion
 
+    #region Walk
     private void HandleMovement()
     {
         if (Input.GetKey(KeyCode.LeftShift))
@@ -84,6 +93,9 @@ public class PlayerMovement : MonoBehaviour
             _myRigidbody.velocity += friction;
         }
     }
+    #endregion
+
+    #region Jump
 
     private void HandleJump()
     {
@@ -104,7 +116,9 @@ public class PlayerMovement : MonoBehaviour
         _myRigidbody.transform.DOScaleY(JumpScaleY, JumoScaleDuration).SetLoops(2, LoopType.Yoyo).SetEase(animationsEase);
         _myRigidbody.transform.DOScaleX(JumpScaleX, JumoScaleDuration).SetLoops(2, LoopType.Yoyo).SetEase(animationsEase);
     }
+    #endregion
 
+    #region Landing Controller
     private void LandingAnimation()
     {
         if (DOTween.IsTweening(_myRigidbody.transform)) return;
@@ -129,7 +143,8 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator JumpCoyoteTime(float time)
     {
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSecondsRealtime(time);
         _isJumping = true;
     }
+    #endregion
 }
