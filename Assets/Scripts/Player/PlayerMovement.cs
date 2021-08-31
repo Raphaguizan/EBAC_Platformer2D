@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jump Params")]
     public float jumpForce = 200f;
+    public float coyoteTime = .1f;
 
     [Header("animations Params")]
     public Ease animationsEase = Ease.OutBack;
@@ -123,6 +124,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-            _isJumping = true;
+        StartCoroutine(JumpCoyoteTime(coyoteTime));
+    }
+
+    IEnumerator JumpCoyoteTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        _isJumping = true;
     }
 }
