@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 200f;
     public float coyoteTime = .1f;
 
-    [Header("animations Params")]
+    [Header("animations distortion Params")]
     public Ease animationsEase = Ease.OutBack;
     [Space]
     public float JumpScaleY = 1.5f;
@@ -27,6 +27,12 @@ public class PlayerMovement : MonoBehaviour
     public float LandingScaleY = .5f;
     public float LandingScaleX = .3f;
     public float LandingScaleDuration = .2f;
+
+    [Header("Animation Controller")]
+    public Animator myAnimator;
+    [SerializeField] private float flipTime = .1f;
+    [SerializeField] private string _walkBool;
+    [SerializeField] private string _runBool;
 
 
     [HideInInspector]
@@ -77,10 +83,17 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow))
         {
             _myRigidbody.velocity = new Vector2(_currentSpeed, _myRigidbody.velocity.y);
+            WalkAnimationController(1);
         }
         else if (Input.GetKey(KeyCode.LeftArrow))
         {
             _myRigidbody.velocity = new Vector2(-_currentSpeed, _myRigidbody.velocity.y);
+            WalkAnimationController(-1);
+        }
+        else
+        {
+            myAnimator.SetBool(_walkBool, false);
+            myAnimator.SetBool(_runBool, false);
         }
 
 
@@ -91,6 +104,22 @@ public class PlayerMovement : MonoBehaviour
         else if (_myRigidbody.velocity.x < 0)
         {
             _myRigidbody.velocity += friction;
+        }
+    }
+
+    private void WalkAnimationController(int side)
+    {
+        if (_myRigidbody.transform.localScale.x != side)
+        {
+            _myRigidbody.transform.DOScaleX(side, flipTime);
+        }
+        if (_currentSpeed == speed)
+        {
+            myAnimator.SetBool(_walkBool, true);
+        }
+        else if (_currentSpeed == runSpeed)
+        {
+            myAnimator.SetBool(_runBool, true);
         }
     }
     #endregion

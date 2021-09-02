@@ -48,6 +48,7 @@ public class HeathBase : MonoBehaviour
         transform.DOScaleX(animX, animDuration);
         sptRenderer.DOBlendableColor(Color.black, animDuration);
 
+        // poderia usar um script de movimentação base para generalizar essa parte para player e inimigos
         var player = GetComponent<PlayerMovement>();
         if(player != null)
         {
