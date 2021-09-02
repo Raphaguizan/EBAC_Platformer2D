@@ -881,6 +881,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7514419917121590643, guid: e335a86161d3c554ca059bba91dff92b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.1721181
+      objectReference: {fileID: 0}
+    - target: {fileID: 7514419917121590643, guid: e335a86161d3c554ca059bba91dff92b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.00000036236972
+      objectReference: {fileID: 0}
+    - target: {fileID: 7514419917121590643, guid: e335a86161d3c554ca059bba91dff92b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9517376
+      objectReference: {fileID: 0}
+    - target: {fileID: 7514419917121590643, guid: e335a86161d3c554ca059bba91dff92b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7514419917121590643, guid: e335a86161d3c554ca059bba91dff92b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7514419917121590643, guid: e335a86161d3c554ca059bba91dff92b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.30691302
+      objectReference: {fileID: 0}
+    - target: {fileID: 7514419917121590643, guid: e335a86161d3c554ca059bba91dff92b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: -8208404338576656980, guid: e335a86161d3c554ca059bba91dff92b, type: 3}
 --- !u!1 &420749269
@@ -1036,7 +1064,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   runSpeed: 20
-  friction: {x: 1, y: 0}
+  friction: {x: 0.8, y: 0}
   jumpForce: 200
   coyoteTime: 0.06
   animationsEase: 27
@@ -1050,6 +1078,8 @@ MonoBehaviour:
   flipTime: 0.1
   _walkBool: walk
   _runBool: run
+  _jumpTrigger: jump
+  _landTrigger: land
   canMove: 1
 --- !u!50 &675117980
 Rigidbody2D:

@@ -33,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float flipTime = .1f;
     [SerializeField] private string _walkBool;
     [SerializeField] private string _runBool;
+    [SerializeField] private string _jumpTrigger;
+    [SerializeField] private string _landTrigger;
 
 
     [HideInInspector]
@@ -116,10 +118,12 @@ public class PlayerMovement : MonoBehaviour
         if (_currentSpeed == speed)
         {
             myAnimator.SetBool(_walkBool, true);
+            myAnimator.SetBool(_runBool, false);
         }
         else if (_currentSpeed == runSpeed)
         {
             myAnimator.SetBool(_runBool, true);
+            myAnimator.SetBool(_walkBool, false);
         }
     }
     #endregion
@@ -132,7 +136,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             _myRigidbody.AddForce(Vector2.up * jumpForce * _myRigidbody.gravityScale);
-
+            myAnimator.SetTrigger(_jumpTrigger);
             JumpAnimation();
         }
     }
@@ -150,6 +154,7 @@ public class PlayerMovement : MonoBehaviour
     #region Landing Controller
     private void LandingAnimation()
     {
+        myAnimator.SetTrigger(_landTrigger);
         if (DOTween.IsTweening(_myRigidbody.transform)) return;
 
         _myRigidbody.transform.DOPunchScale(new Vector3(LandingScaleX, LandingScaleY, 0), LandingScaleDuration, 5, .5f);
