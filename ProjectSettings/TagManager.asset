@@ -5,14 +5,15 @@ TagManager:
   serializedVersion: 2
   tags:
   - Floor
+  - Shot
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
+  - Shot
   - 
   - 
   - 

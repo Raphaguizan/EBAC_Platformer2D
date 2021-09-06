@@ -20,13 +20,13 @@ public class PlayerMovement : MonoBehaviour
     [Header("animations distortion Params")]
     public Ease animationsEase = Ease.OutBack;
     [Space]
-    public float JumpScaleY = 1.5f;
-    public float JumpScaleX = .7f;
-    public float JumoScaleDuration = .2f;
+    public float jumpScaleY = 1.5f;
+    public float jumpScaleX = .7f;
+    public float jumpScaleDuration = .2f;
     [Space]
-    public float LandingScaleY = .5f;
-    public float LandingScaleX = .3f;
-    public float LandingScaleDuration = .2f;
+    public float landingScaleY = .5f;
+    public float landingScaleX = .3f;
+    public float landingScaleDuration = .2f;
 
     [Header("Animation Controller")]
     public Animator myAnimator;
@@ -146,8 +146,8 @@ public class PlayerMovement : MonoBehaviour
         _myRigidbody.transform.localScale = Vector2.one;
         DOTween.Kill(_myRigidbody.transform);
 
-        _myRigidbody.transform.DOScaleY(JumpScaleY, JumoScaleDuration).SetLoops(2, LoopType.Yoyo).SetEase(animationsEase);
-        _myRigidbody.transform.DOScaleX(JumpScaleX, JumoScaleDuration).SetLoops(2, LoopType.Yoyo).SetEase(animationsEase);
+        _myRigidbody.transform.DOScaleY(jumpScaleY, jumpScaleDuration).SetLoops(2, LoopType.Yoyo).SetEase(animationsEase);
+        _myRigidbody.transform.DOScaleX(jumpScaleX, jumpScaleDuration).SetLoops(2, LoopType.Yoyo).SetEase(animationsEase);
     }
     #endregion
 
@@ -157,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
         myAnimator.SetTrigger(_landTrigger);
         if (DOTween.IsTweening(_myRigidbody.transform)) return;
 
-        _myRigidbody.transform.DOPunchScale(new Vector3(LandingScaleX, LandingScaleY, 0), LandingScaleDuration, 5, .5f);
+        _myRigidbody.transform.DOPunchScale(new Vector3(landingScaleX, landingScaleY, 0), landingScaleDuration, 5, .5f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
