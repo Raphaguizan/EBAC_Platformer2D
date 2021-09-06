@@ -40,7 +40,7 @@ public class HealthBase : MonoBehaviour
     private void Kill()
     {
         var sptRenderer = GetComponent<SpriteRenderer>();
-        if (DOTween.IsTweening(sptRenderer)) return;
+        if (DOTween.IsTweening(sptRenderer)) DOTween.KillAll();
 
         _isDead = true;
 

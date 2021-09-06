@@ -7,6 +7,7 @@ public class EnemyBase : MonoBehaviour
 {
     [Header("Physics")]
     public Vector2 friction = new Vector2(.2f,0);
+    public float fictionBounder = .2f;
 
     [Header("Damage")]
     public int damagePower = 5;
@@ -27,13 +28,17 @@ public class EnemyBase : MonoBehaviour
 
     void Update()
     {
-        if (_myRigidbody.velocity.x > 0)
+        if (_myRigidbody.velocity.x > fictionBounder)
         {
             _myRigidbody.velocity -= friction;
         }
-        else if (_myRigidbody.velocity.x < 0)
+        else if (_myRigidbody.velocity.x < -fictionBounder)
         {
             _myRigidbody.velocity += friction;
+        }
+        else
+        {
+            _myRigidbody.velocity = new Vector3(0, _myRigidbody.velocity.y);
         }
     }
 
@@ -51,6 +56,13 @@ public class EnemyBase : MonoBehaviour
         if (collision.transform.CompareTag(bulletTag))
         {
             collision.gameObject.SetActive(false);
+
+            var flash = GetComponent<Flash>();
+            if (flash)
+            {
+                flash.StartFlash();
+            }
+
             var health = GetComponent<HealthBase>();
             if (health)
             {

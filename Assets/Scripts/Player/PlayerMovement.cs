@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public float runSpeed = 20f;
 
     public Vector2 friction = new Vector2(.1f, 0);
+    public float frictionBounder = .2f;
 
     [Header("Jump Params")]
     public float jumpForce = 200f;
@@ -99,13 +100,17 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if (_myRigidbody.velocity.x > 0)
+        if (_myRigidbody.velocity.x > frictionBounder)
         {
             _myRigidbody.velocity -= friction;
         }
-        else if (_myRigidbody.velocity.x < 0)
+        else if (_myRigidbody.velocity.x < -frictionBounder)
         {
             _myRigidbody.velocity += friction;
+        }
+        else
+        {
+            _myRigidbody.velocity = new Vector3(0, _myRigidbody.velocity.y);
         }
     }
 
