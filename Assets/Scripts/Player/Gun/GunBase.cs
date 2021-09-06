@@ -48,6 +48,8 @@ public class GunBase : MonoBehaviour
         if (BulletsAmount <= 0) return;
         BulletsAmount--;
 
+        ShotCallBack?.Invoke();
+
         _side = 1;
         if (player.transform.localScale.x < 0) 
             _side = -1;
@@ -63,7 +65,5 @@ public class GunBase : MonoBehaviour
         var aux = Instantiate(bulletPrefab);
         aux.GetComponent<BulletBase>().Initialize(transform.position, _side);
         _shotPoolingList.Add(aux);
-
-        ShotCallBack?.Invoke();
     }
 }
