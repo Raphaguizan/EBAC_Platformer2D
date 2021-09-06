@@ -6,6 +6,7 @@ public class BulletBase : MonoBehaviour
 {
     public Vector2 direction;
     public float lifeTime;
+    public int Damage = 1;
 
     IEnumerator TimeToDestroy()
     {

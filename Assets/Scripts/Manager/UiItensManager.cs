@@ -27,6 +27,6 @@ public class UiItensManager : Singleton<UiItensManager>
 
     private void UpdateInterface()
     {
-        text.text = "X " + gun.BulletsAmount.ToString("00");
+        text.text = "x " + gun.BulletsAmount.ToString("00");
     }
 }

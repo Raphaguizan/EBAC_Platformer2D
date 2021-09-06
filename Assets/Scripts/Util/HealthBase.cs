@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class HeathBase : MonoBehaviour
+public class HealthBase : MonoBehaviour
 {
     public int lifePoints = 10;
 
