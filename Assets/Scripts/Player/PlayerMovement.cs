@@ -7,36 +7,7 @@ using DG.Tweening;
 public class PlayerMovement : MonoBehaviour
 {
     #region Params
-    [Header("movement params")]
-    public float speed = 10f;
-    public float runSpeed = 20f;
-
-    public Vector2 friction = new Vector2(.1f, 0);
-    public float frictionBounder = .2f;
-
-    [Header("Jump Params")]
-    public float jumpForce = 200f;
-    public float coyoteTime = .1f;
-
-    [Header("animations distortion Params")]
-    public Ease animationsEase = Ease.OutBack;
-    [Space]
-    public float jumpScaleY = 1.5f;
-    public float jumpScaleX = .7f;
-    public float jumpScaleDuration = .2f;
-    [Space]
-    public float landingScaleY = .5f;
-    public float landingScaleX = .3f;
-    public float landingScaleDuration = .2f;
-
-    [Header("Animation Controller")]
-    public Animator myAnimator;
-    [SerializeField] private float flipTime = .1f;
-    [SerializeField] private string _walkBool;
-    [SerializeField] private string _runBool;
-    [SerializeField] private string _jumpTrigger;
-    [SerializeField] private string _landTrigger;
-
+    public SOPlayerMovementSetup soPlayerMovement;
 
     [HideInInspector]
     public bool canMove = true;
@@ -44,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _myRigidbody;
     private float _currentSpeed;
     private bool _isJumping = false;
+
+    private Animator _currentAnimator;
 
     #endregion
 
@@ -57,7 +30,8 @@ public class PlayerMovement : MonoBehaviour
     public void Init()
     {
         _myRigidbody = GetComponent<Rigidbody2D>();
-        _currentSpeed = speed;
+        _currentAnimator = Instantiate(soPlayerMovement.myAnimator, transform);
+        _currentSpeed = soPlayerMovement.speed;
         _isJumping = false;
         canMove = true;
     }
@@ -75,11 +49,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            _currentSpeed = runSpeed;
+            _currentSpeed = soPlayerMovement.runSpeed;
         }
         else
         {
-            _currentSpeed = speed;
+            _currentSpeed = soPlayerMovement.speed;
         }
 
 
@@ -95,18 +69,18 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            myAnimator.SetBool(_walkBool, false);
-            myAnimator.SetBool(_runBool, false);
+            _currentAnimator.SetBool(soPlayerMovement.walkBool, false);
+            _currentAnimator.SetBool(soPlayerMovement.runBool, false);
         }
 
 
-        if (_myRigidbody.velocity.x > frictionBounder)
+        if (_myRigidbody.velocity.x > soPlayerMovement.frictionBounder)
         {
-            _myRigidbody.velocity -= friction;
+            _myRigidbody.velocity -= soPlayerMovement.friction;
         }
-        else if (_myRigidbody.velocity.x < -frictionBounder)
+        else if (_myRigidbody.velocity.x < -soPlayerMovement.frictionBounder)
         {
-            _myRigidbody.velocity += friction;
+            _myRigidbody.velocity += soPlayerMovement.friction;
         }
         else
         {
@@ -118,17 +92,17 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_myRigidbody.transform.localScale.x != side)
         {
-            _myRigidbody.transform.DOScaleX(side, flipTime);
+            _myRigidbody.transform.DOScaleX(side, soPlayerMovement.flipTime);
         }
-        if (_currentSpeed == speed)
+        if (_currentSpeed == soPlayerMovement.speed)
         {
-            myAnimator.SetBool(_walkBool, true);
-            myAnimator.SetBool(_runBool, false);
+            _currentAnimator.SetBool(soPlayerMovement.walkBool, true);
+            _currentAnimator.SetBool(soPlayerMovement.runBool, false);
         }
-        else if (_currentSpeed == runSpeed)
+        else if (_currentSpeed == soPlayerMovement.runSpeed)
         {
-            myAnimator.SetBool(_runBool, true);
-            myAnimator.SetBool(_walkBool, false);
+            _currentAnimator.SetBool(soPlayerMovement.runBool, true);
+            _currentAnimator.SetBool(soPlayerMovement.walkBool, false);
         }
     }
     #endregion
@@ -140,8 +114,8 @@ public class PlayerMovement : MonoBehaviour
         if (_isJumping) return;
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _myRigidbody.AddForce(Vector2.up * jumpForce * _myRigidbody.gravityScale);
-            myAnimator.SetTrigger(_jumpTrigger);
+            _myRigidbody.AddForce(Vector2.up * soPlayerMovement.jumpForce * _myRigidbody.gravityScale);
+            _currentAnimator.SetTrigger(soPlayerMovement.jumpTrigger);
             JumpAnimation();
         }
     }
@@ -151,18 +125,18 @@ public class PlayerMovement : MonoBehaviour
         _myRigidbody.transform.localScale = Vector2.one;
         DOTween.Kill(_myRigidbody.transform);
 
-        _myRigidbody.transform.DOScaleY(jumpScaleY, jumpScaleDuration).SetLoops(2, LoopType.Yoyo).SetEase(animationsEase);
-        _myRigidbody.transform.DOScaleX(jumpScaleX, jumpScaleDuration).SetLoops(2, LoopType.Yoyo).SetEase(animationsEase);
+        _myRigidbody.transform.DOScaleY(soPlayerMovement.jumpScaleY, soPlayerMovement.jumpScaleDuration).SetLoops(2, LoopType.Yoyo).SetEase(soPlayerMovement.animationsEase);
+        _myRigidbody.transform.DOScaleX(soPlayerMovement.jumpScaleX, soPlayerMovement.jumpScaleDuration).SetLoops(2, LoopType.Yoyo).SetEase(soPlayerMovement.animationsEase);
     }
     #endregion
 
     #region Landing Controller
     private void LandingAnimation()
     {
-        myAnimator.SetTrigger(_landTrigger);
+        _currentAnimator.SetTrigger(soPlayerMovement.landTrigger);
         if (DOTween.IsTweening(_myRigidbody.transform)) return;
 
-        _myRigidbody.transform.DOPunchScale(new Vector3(landingScaleX, landingScaleY, 0), landingScaleDuration, 5, .5f);
+        _myRigidbody.transform.DOPunchScale(new Vector3(soPlayerMovement.landingScaleX, soPlayerMovement.landingScaleY, 0), soPlayerMovement.landingScaleDuration, 5, .5f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -177,7 +151,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        StartCoroutine(JumpCoyoteTime(coyoteTime));
+        StartCoroutine(JumpCoyoteTime(soPlayerMovement.coyoteTime));
     }
 
     IEnumerator JumpCoyoteTime(float time)
