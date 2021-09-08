@@ -6,7 +6,8 @@ using UnityEngine;
 public class GunBase : MonoBehaviour
 {
     public Transform player;
-    public int BulletsAmount { get; private set; } = 0;
+    public Transform gunPoint;
+    public SOInt BulletsAmount;
     public float shotCooldown;
     public GameObject bulletPrefab;
     [Space]
@@ -18,9 +19,9 @@ public class GunBase : MonoBehaviour
 
     private int _side = 1;
 
-    public void AddBullets(int amount = 1)
+    private void OnEnable()
     {
-        BulletsAmount += amount;
+        BulletsAmount.value = 0;
     }
 
     private void Update()
@@ -45,8 +46,8 @@ public class GunBase : MonoBehaviour
 
     private void Shot()
     {
-        if (BulletsAmount <= 0) return;
-        BulletsAmount--;
+        if (BulletsAmount.value <= 0) return;
+        BulletsAmount.value--;
 
         ShotCallBack?.Invoke();
 
@@ -58,12 +59,12 @@ public class GunBase : MonoBehaviour
         {
             if (!i.activeInHierarchy)
             {
-                i.GetComponent<BulletBase>().Initialize(transform.position, _side);
+                i.GetComponent<BulletBase>().Initialize(gunPoint.transform.position, _side);
                 return;
             }
         }
         var aux = Instantiate(bulletPrefab);
-        aux.GetComponent<BulletBase>().Initialize(transform.position, _side);
+        aux.GetComponent<BulletBase>().Initialize(gunPoint.transform.position, _side);
         _shotPoolingList.Add(aux);
     }
 }
