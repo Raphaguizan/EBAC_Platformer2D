@@ -6,27 +6,50 @@ using Game.Util;
 
 public class UiItensManager : Singleton<UiItensManager>
 {
-    public TextMeshProUGUI text;
+    [Header("arrows")]
+    public TextMeshProUGUI textArrows;
     public GunBase gun;
+    public SOInt gunBullets;
+    [Header("coins")]
+    public TextMeshProUGUI textCoins;
+    public SOInt coinAmount;
 
     private void OnEnable()
     {
-        gun.ShotCallBack += UpdateInterface;
+        gun.ShotCallBack += UpdateInterfaceArrows;
+        coinAmount.value = 0;
     }
 
     private void OnDisable()
     {
-        gun.ShotCallBack -= UpdateInterface;
+        gun.ShotCallBack -= UpdateInterfaceArrows;
     }
 
+    #region arrow interface
     public void AddArrow(int amount)
     {
-        gun.AddBullets(amount);
-        UpdateInterface();
+        gunBullets.value += amount;
+        UpdateInterfaceArrows();
     }
 
-    private void UpdateInterface()
+    private void UpdateInterfaceArrows()
     {
-        text.text = "x " + gun.BulletsAmount.ToString("00");
+        textArrows.text = "x " + gunBullets.value.ToString("00");
     }
+
+    #endregion
+
+    #region Coin Interface
+    public static void AddCoin(int amount = 1)
+    {
+        Instance.coinAmount.value += amount;
+        Instance.UpdateInterfaceCoins();
+    }
+
+
+    private void UpdateInterfaceCoins()
+    {
+        textCoins.text = "= " + coinAmount.value.ToString("00");
+    }
+    #endregion
 }
