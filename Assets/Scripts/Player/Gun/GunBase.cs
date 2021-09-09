@@ -16,6 +16,7 @@ public class GunBase : MonoBehaviour
 
     private List<GameObject> _shotPoolingList = new List<GameObject>();
     private Coroutine _currentCoroutine;
+    private bool _buttonIsPressed = false;
 
     private int _side = 1;
 
@@ -28,16 +29,18 @@ public class GunBase : MonoBehaviour
     {
         if (Input.GetKeyDown(shotKey))
         {
+            _buttonIsPressed = true;
             _currentCoroutine = StartCoroutine(ShotController());
         }
         else if (Input.GetKeyUp(shotKey))
         {
+            _buttonIsPressed = false;
             StopCoroutine(_currentCoroutine);
         }
     }
     IEnumerator ShotController()
     {
-        while (true)
+        while (_buttonIsPressed)
         {
             Shot();
             yield return new WaitForSeconds(shotCooldown);
