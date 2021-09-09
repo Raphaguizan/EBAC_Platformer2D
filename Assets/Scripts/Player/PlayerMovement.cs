@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.Manager;
 using UnityEngine;
 using DG.Tweening;
 
@@ -118,6 +119,7 @@ public class PlayerMovement : MonoBehaviour
             _myRigidbody.AddForce(Vector2.up * soPlayerMovement.jumpForce * _myRigidbody.gravityScale);
             _currentAnimator.SetTrigger(soPlayerMovement.jumpTrigger);
             JumpAnimation();
+            VFXManager.PlayVFX(VFXType.JUMP, walkParticleSystem.transform.position);
         }
     }
 
