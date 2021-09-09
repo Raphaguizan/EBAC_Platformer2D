@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 {
     #region Params
     public SOPlayerMovementSetup soPlayerMovement;
+    public ParticleSystem walkParticleSystem;
 
     [HideInInspector]
     public bool canMove = true;
@@ -141,16 +142,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        walkParticleSystem.Play();
         LandingAnimation();
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-            _isJumping = false;
+        _isJumping = false;
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
+        walkParticleSystem.Stop();
         StartCoroutine(JumpCoyoteTime(soPlayerMovement.coyoteTime));
     }
 
