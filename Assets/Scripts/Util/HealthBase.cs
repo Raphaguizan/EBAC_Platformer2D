@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Game.Manager;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class HealthBase : MonoBehaviour
@@ -55,10 +56,16 @@ public class HealthBase : MonoBehaviour
         if(player != null)
         {
             player.canMove = false;
+            Invoke(nameof(EndGame), animDuration);
         }
 
         if (sound) sound.Play();
 
         Destroy(gameObject, animDuration);
+    }
+
+    private void EndGame()
+    {
+        LoadScene.Instance.Load(0);
     }
 }

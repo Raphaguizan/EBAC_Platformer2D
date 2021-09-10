@@ -150,9 +150,14 @@ public class PlayerMovement : MonoBehaviour
         walkParticleSystem.Play();
         LandingAnimation();
     }
-
+    private string _wallTag = "Wall";
     private void OnCollisionStay2D(Collision2D collision)
     {
+        if (collision.transform.CompareTag(_wallTag))
+        {
+            _isJumping = true;
+            return;
+        }
         _isJumping = false;
     }
 

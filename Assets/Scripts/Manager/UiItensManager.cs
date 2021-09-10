@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Game.Util;
+using Game.Manager;
 
 public class UiItensManager : Singleton<UiItensManager>
 {
@@ -13,10 +14,14 @@ public class UiItensManager : Singleton<UiItensManager>
     [Header("coins")]
     public TextMeshProUGUI textCoins;
     public SOInt coinAmount;
+    public Transform coinsParent;
+
+    private int _totalCoins;
 
     private void OnEnable()
     {
         gun.ShotCallBack += UpdateInterfaceArrows;
+        _totalCoins = coinsParent.childCount;
         coinAmount.value = 0;
     }
 
@@ -43,6 +48,10 @@ public class UiItensManager : Singleton<UiItensManager>
     public static void AddCoin(int amount = 1)
     {
         Instance.coinAmount.value += amount;
+        if(Instance.coinAmount.value >= Instance._totalCoins)
+        {
+            LoadScene.Instance.Load(0);
+        }
         Instance.UpdateInterfaceCoins();
     }
 

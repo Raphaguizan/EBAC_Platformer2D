@@ -10,9 +10,31 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 191c3a47e637b5048979acd8c49e9a9f
   m_FloatValues:
-    fb0d68a3b69841b4085551f87af83322: -6.5566154
-    101cb49a8bf06f245a86b90c691db5ce: -7.436929
+    fb0d68a3b69841b4085551f87af83322: 0.8772599
+    101cb49a8bf06f245a86b90c691db5ce: -22.003613
   m_TransitionOverrides: {}
+--- !u!244 &-6471863815840178546
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 5eea8a4f791d3ed478b2f3d6aec17665
+  m_EffectName: Flange
+  m_MixLevel: e79e8de4d5226694ea0f7caf9708ffc6
+  m_Parameters:
+  - m_ParameterName: Drymix
+    m_GUID: b0e059d61f73d454cb49c1c4e03532be
+  - m_ParameterName: Wetmix
+    m_GUID: 7ee1b7ce7b72d1d41a4698e519e01fe1
+  - m_ParameterName: Depth
+    m_GUID: a4e595e83c5fd6e46906b165520c41c8
+  - m_ParameterName: Rate
+    m_GUID: 407bb2122c712f24f94cdddf77110a54
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &-1299889510522679344
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -43,7 +65,11 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: fb0d68a3b69841b4085551f87af83322
+    name: MusicVolume
+  - guid: 101cb49a8bf06f245a86b90c691db5ce
+    name: SFXVolume
   m_AudioMixerGroupViews:
   - guids:
     - 594bd15814dc60d41978705c3cdef758
@@ -51,7 +77,7 @@ AudioMixerController:
     - 224c848655ec8134eab650970b9f14ec
     name: View
   m_CurrentViewIndex: 0
-  m_TargetSnapshot: {fileID: 24500006}
+  m_TargetSnapshot: {fileID: -7452381070235849089}
 --- !u!243 &24300002
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -96,7 +122,8 @@ AudioMixerSnapshotController:
   m_Name: InGame
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 01db71ef18363cc49ba99ad50f84c8aa
-  m_FloatValues: {}
+  m_FloatValues:
+    fb0d68a3b69841b4085551f87af83322: -16.035946
   m_TransitionOverrides: {}
 --- !u!243 &77434431407372801
 AudioMixerGroupController:
