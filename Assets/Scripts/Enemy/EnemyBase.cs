@@ -68,6 +68,12 @@ public class EnemyBase : MonoBehaviour
             {
                 health.Damage(collision.GetComponent<BulletBase>().Damage);
             }
+
+            var hitSound = GetComponent<RandomSound>();
+            if (hitSound)
+            {
+                hitSound.PlayRandom();
+            }
         }
     }
 }

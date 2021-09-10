@@ -12,6 +12,8 @@ public class HealthBase : MonoBehaviour
     public float animDuration = 1f;
     public float animY = .3f;
     public float animX = 1.3f;
+    [Header("Sound")]
+    public AudioSource sound;
 
     private int _curretnLife;
     private bool _isDead = false;
@@ -54,6 +56,8 @@ public class HealthBase : MonoBehaviour
         {
             player.canMove = false;
         }
+
+        if (sound) sound.Play();
 
         Destroy(gameObject, animDuration);
     }

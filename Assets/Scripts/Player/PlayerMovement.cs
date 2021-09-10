@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     public SOPlayerMovementSetup soPlayerMovement;
     public ParticleSystem walkParticleSystem;
 
+    public AudioSource jumpSound;
+
     [HideInInspector]
     public bool canMove = true;
 
@@ -116,6 +118,7 @@ public class PlayerMovement : MonoBehaviour
         if (_isJumping) return;
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            if (jumpSound) jumpSound.Play();
             _myRigidbody.AddForce(Vector2.up * soPlayerMovement.jumpForce * _myRigidbody.gravityScale);
             _currentAnimator.SetTrigger(soPlayerMovement.jumpTrigger);
             JumpAnimation();

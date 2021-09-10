@@ -13,6 +13,8 @@ public class GunBase : MonoBehaviour
     [Space]
     public KeyCode shotKey = KeyCode.A;
     public Action ShotCallBack;
+    [Space]
+    public RandomSound sound;
 
     private List<GameObject> _shotPoolingList = new List<GameObject>();
     private Coroutine _currentCoroutine;
@@ -53,6 +55,7 @@ public class GunBase : MonoBehaviour
         BulletsAmount.value--;
 
         ShotCallBack?.Invoke();
+        if(sound) sound.PlayRandom();
 
         _side = 1;
         if (player.transform.localScale.x < 0) 

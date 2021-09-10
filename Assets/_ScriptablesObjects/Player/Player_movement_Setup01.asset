@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20cc471e601dc3945b4eb954abd5f748, type: 3}
   m_Name: Player_movement_Setup01
   m_EditorClassIdentifier: 
+  myAnimator: {fileID: 1114538115, guid: 86bbf3cb3902a9e49b24acef5bbfdf07, type: 3}
   speed: 10
   runSpeed: 20
   friction: {x: 0.8, y: 0}
@@ -25,7 +26,6 @@ MonoBehaviour:
   landingScaleY: -0.3
   landingScaleX: 0.3
   landingScaleDuration: 0.2
-  myAnimator: {fileID: 1114538115, guid: 86bbf3cb3902a9e49b24acef5bbfdf07, type: 3}
   flipTime: 0.1
   walkBool: walk
   runBool: run
